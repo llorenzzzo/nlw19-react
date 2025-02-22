@@ -2,7 +2,7 @@
 
 Repositório do projeto da trilha React da 19ª NLW da Rocketseat
 
-# Assuntos
+# Anotações
 
 ## React
 
