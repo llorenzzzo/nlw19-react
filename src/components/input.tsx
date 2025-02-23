@@ -9,7 +9,7 @@ export function InputRoot({ error = false, ...props }: InputRootProps) {
   return (
     <div
       data-error={error}
-      className="group bg-gray-800 border border-gray-600 rounded-xl px-4 w-full h-12 gap-2 flex items-center focus-within:border-2 focus-within:border-gray-100 data-[error=true]:border-danger"
+      className="group bg-gray-800 border-2 border-gray-600 rounded-xl px-4 w-full h-12 gap-2 flex items-center focus-within:border-2 focus-within:border-gray-100 data-[error=true]:border-danger"
       {...props}
     ></div>
   );
