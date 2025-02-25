@@ -1,11 +1,26 @@
+import {
+  getSubscriberInviteClicks,
+  getSubscriberInviteCount,
+  getSubscriberRankingPosition,
+} from "@/http/api";
 import { MousePointerClick, BadgeCheck, Medal } from "lucide-react";
 
-export function Stats() {
+interface StatsProps {
+  subscriberId: string;
+}
+
+export async function Stats({ subscriberId }: StatsProps) {
+  const { count: accesCount } = await getSubscriberInviteClicks(subscriberId);
+  const { count: inviteCount } = await getSubscriberInviteCount(subscriberId);
+  const { position: rankingPosition } = await getSubscriberRankingPosition(
+    subscriberId
+  );
+
   return (
     <div className="grid gap-3 md:grid-cols-3">
       <div className="bg-gray-700 border border-gray-600 rounded-xl flex flex-col items-center justify-center gap-1 px-4 py-7 relative">
         <span className="font-heading text-2xl leading-none text-gray-200">
-          942
+          {accesCount}
         </span>
         <span className="text-gray-300 text-sm leading-none text-center">
           Acessos ao link
@@ -14,7 +29,7 @@ export function Stats() {
       </div>
       <div className="bg-gray-700 border border-gray-600 rounded-xl flex flex-col items-center justify-center gap-1 px-4 py-7 relative">
         <span className="font-heading text-2xl leading-none text-gray-200">
-          942
+          {inviteCount}
         </span>
         <span className="text-gray-300 text-sm leading-none text-center">
           Inscrições feitas
@@ -23,7 +38,7 @@ export function Stats() {
       </div>
       <div className="bg-gray-700 border border-gray-600 rounded-xl flex flex-col items-center justify-center gap-1 px-4 py-7 relative">
         <span className="font-heading text-2xl leading-none text-gray-200">
-          942
+          {rankingPosition ? `${rankingPosition}º` : "-"}
         </span>
         <span className="text-gray-300 text-sm leading-none text-center">
           Posição no ranking

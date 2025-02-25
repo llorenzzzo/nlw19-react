@@ -6,6 +6,8 @@ import { User, Mail, ArrowRight } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { subscribeToEvent } from "@/http/api";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const subsctiptionSchema = z.object({
   name: z.string().min(2, "Digite seu nome completo"),
@@ -15,9 +17,8 @@ const subsctiptionSchema = z.object({
 type SubsctiptionSchema = z.infer<typeof subsctiptionSchema>;
 
 export function SubscriptionForm() {
-  function onSubscribe(data: SubsctiptionSchema) {
-    console.log(data);
-  }
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   const {
     register,
@@ -26,6 +27,13 @@ export function SubscriptionForm() {
   } = useForm<SubsctiptionSchema>({
     resolver: zodResolver(subsctiptionSchema),
   });
+
+  async function onSubscribe({ name, email }: SubsctiptionSchema) {
+    const referrer = searchParams.get("referrer");
+    const { subscriberId } = await subscribeToEvent({ name, email });
+
+    router.push(`/invite/${subscriberId}`);
+  }
 
   return (
     <form
