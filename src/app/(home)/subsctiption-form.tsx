@@ -9,12 +9,12 @@ import { z } from "zod";
 import { subscribeToEvent } from "@/http/api";
 import { useRouter, useSearchParams } from "next/navigation";
 
-const subsctiptionSchema = z.object({
+const subscriptionSchema = z.object({
   name: z.string().min(2, "Digite seu nome completo"),
   email: z.string().email("Digite um e-mail válido"),
 });
 
-type SubsctiptionSchema = z.infer<typeof subsctiptionSchema>;
+type SubscriptionSchema = z.infer<typeof subscriptionSchema>;
 
 export function SubscriptionForm() {
   const router = useRouter();
@@ -24,13 +24,13 @@ export function SubscriptionForm() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<SubsctiptionSchema>({
-    resolver: zodResolver(subsctiptionSchema),
+  } = useForm<SubscriptionSchema>({
+    resolver: zodResolver(subscriptionSchema),
   });
 
-  async function onSubscribe({ name, email }: SubsctiptionSchema) {
+  async function onSubscribe({ name, email }: SubscriptionSchema) {
     const referrer = searchParams.get("referrer");
-    const { subscriberId } = await subscribeToEvent({ name, email });
+    const { subscriberId } = await subscribeToEvent({ name, email, referrer });
 
     router.push(`/invite/${subscriberId}`);
   }

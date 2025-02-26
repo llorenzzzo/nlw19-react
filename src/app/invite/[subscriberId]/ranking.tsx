@@ -6,6 +6,7 @@ import { getRanking } from "@/http/api";
 
 export async function Ranking() {
   const { ranking } = await getRanking();
+  console.log(ranking);
 
   return (
     <div className="w-full max-w-[440px] space-y-5">
@@ -17,7 +18,10 @@ export async function Ranking() {
           const rankingPosition = index + 1;
 
           return (
-            <div className="bg-gray-700 border border-gray-600 rounded-xl flex flex-col justify-center gap-3 p-6 relative">
+            <div
+              key={item.id}
+              className="bg-gray-700 border border-gray-600 rounded-xl flex flex-col justify-center gap-3 p-6 relative"
+            >
               <span className="text-sm font-bold text-gray-300">
                 <span className="font-semibold"> {rankingPosition}º</span> |{" "}
                 {item.name}
